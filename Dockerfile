@@ -1,17 +1,18 @@
-# Use the official Python image from the Docker Hub
+# Use official Python base image
 FROM python:3.9-slim
 
 # Set the working directory
 WORKDIR /app
 
-# Copy the current directory contents into the container
+# Copy all files to container
 COPY . .
 
-# Install the dependencies
+# Install dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose the port the app runs on
+# Expose the port
 EXPOSE 5000
 
-# Set the command to run the app using Gunicorn
-CMD ["gunicorn", "app:app", "--bind", "0.0.0.0:5000"]
+# Start the app using gunicorn
+CMD ["gunicorn", "--bind", "0.0.0.0:$PORT", "app:app"]
+
